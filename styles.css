@@ -722,6 +722,10 @@ a {
   gap: 18px;
 }
 
+.contact__copy {
+  max-width: 100%;
+}
+
 @media (min-width: 920px) {
   .contact {
     grid-template-columns: 1fr 1fr;
@@ -735,6 +739,22 @@ a {
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 14px;
+}
+
+@media (max-width: 520px) {
+  .contact {
+    gap: 16px;
+  }
+
+  .socialRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .social {
+    width: 100%;
+    justify-content: flex-start;
+  }
 }
 
 .social {
@@ -1246,7 +1266,7 @@ body.motion-reduced .loader__bar span {
 
 /* Contact photo - elegant with hover */
 .contact__photo {
-  width: 160px;
+  width: min(160px, 100%);
   height: 160px;
   border-radius: 24px;
   object-fit: cover;
