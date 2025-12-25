@@ -755,6 +755,17 @@ a {
     width: 100%;
     justify-content: flex-start;
   }
+
+  /* On small screens, keep reveals and gallery tiles simple to avoid flashing */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .tile__spark {
+    display: none;
+  }
 }
 
 .social {
