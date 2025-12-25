@@ -861,11 +861,13 @@ textarea:focus {
 /* Floating music controller bar */
 .musicBar {
   position: fixed;
-  left: 12px;
+  left: auto;
   right: 12px;
   bottom: calc(12px + env(safe-area-inset-bottom));
   z-index: 110;
-  display: flex;
+  width: fit-content;
+  max-width: calc(100% - 24px);
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
@@ -931,34 +933,17 @@ textarea:focus {
   text-overflow: ellipsis;
 }
 
-.musicBar__vol {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: rgba(229, 236, 255, 0.75);
-}
-
-.musicBar__volIcon {
-  font-size: 14px;
-}
-
-.musicBar__vol input {
-  width: 130px;
-}
 
 @media (max-width: 520px) {
   .musicBar {
-    left: 10px;
+    left: auto;
     right: 10px;
+    max-width: calc(100% - 20px);
     padding: 10px 10px;
   }
 
   .musicBar__status {
     display: none;
-  }
-
-  .musicBar__vol input {
-    width: 90px;
   }
 }
 

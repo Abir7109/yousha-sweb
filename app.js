@@ -849,40 +849,31 @@
   function setupMusic() {
     const audio = $("#bgMusic");
     const toggle = $("#musicToggle");
-    const volume = $("#musicVolume");
     const status = $("#musicStatus");
 
-    if (!audio || !toggle || !volume) return;
+    if (!audio || !toggle) return;
 
     const MUSIC_KEY = "youshaweb:music:v1";
 
     let wantsOn = false;
     let isPlaying = false;
 
-    // Defaults (soft)
-    let vol = 0.22;
+    // Soft fixed volume (no UI)
+    audio.volume = 0.22;
 
     try {
       const raw = localStorage.getItem(MUSIC_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
         if (typeof parsed?.on === "boolean") wantsOn = parsed.on;
-        if (typeof parsed?.volume === "number") vol = parsed.volume;
       }
     } catch {
       // ignore
     }
 
-    function clamp01(n) {
-      return Math.max(0, Math.min(1, n));
-    }
-
-    audio.volume = clamp01(vol);
-    volume.value = String(Math.round(audio.volume * 100));
-
     function save() {
       try {
-        localStorage.setItem(MUSIC_KEY, JSON.stringify({ on: wantsOn, volume: audio.volume }));
+        localStorage.setItem(MUSIC_KEY, JSON.stringify({ on: wantsOn }));
       } catch {
         // ignore
       }
@@ -934,15 +925,6 @@
         await tryPlay();
       }
     });
-
-    volume.addEventListener(
-      "input",
-      () => {
-        audio.volume = clamp01(Number(volume.value) / 100);
-        save();
-      },
-      { passive: true }
-    );
 
     // If user previously enabled music, start after first user gesture.
     if (wantsOn) {
