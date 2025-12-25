@@ -248,6 +248,27 @@
 
     <div id="emojiLayer" class="emojiLayer" aria-hidden="true"></div>
 
+    <!-- Background music (original loop) -->
+    <audio id="bgMusic" src="assets/music/soft-loop.wav" preload="none" loop></audio>
+
+    <!-- Floating music controller bar -->
+    <div id="musicBar" class="musicBar" role="region" aria-label="Background music controls">
+      <button id="musicToggle" class="musicBar__btn" type="button" aria-pressed="false">
+        <span class="musicBar__icon" aria-hidden="true">▶</span>
+        <span class="musicBar__text">Play</span>
+      </button>
+
+      <div class="musicBar__meta">
+        <div class="musicBar__title">Soft ambience</div>
+        <div id="musicStatus" class="musicBar__status">Tap play for music</div>
+      </div>
+
+      <label class="musicBar__vol" aria-label="Music volume">
+        <span class="musicBar__volIcon" aria-hidden="true">🔉</span>
+        <input id="musicVolume" type="range" min="0" max="100" value="22" />
+      </label>
+    </div>
+
     <script src="app.js" defer></script>
   </body>
 </html>

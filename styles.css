@@ -48,6 +48,7 @@ body {
     linear-gradient(180deg, var(--bg0), var(--bg1));
   min-height: 100vh;
   min-height: 100svh;
+  padding-bottom: calc(78px + env(safe-area-inset-bottom));
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -855,6 +856,110 @@ textarea:focus {
 .footer {
   padding: 24px 0 40px;
   position: relative;
+}
+
+/* Floating music controller bar */
+.musicBar {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(152, 228, 255, 0.35);
+  background: rgba(5, 10, 31, 0.88);
+  color: #e9f0ff;
+  box-shadow: 0 14px 46px rgba(0, 0, 0, 0.55);
+}
+
+@supports (backdrop-filter: blur(10px)) {
+  .musicBar {
+    backdrop-filter: blur(10px);
+  }
+}
+
+.musicBar__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(152, 228, 255, 0.28);
+  background: rgba(152, 228, 255, 0.06);
+  color: #98e4ff;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.musicBar__btn[aria-pressed="true"] {
+  background: rgba(152, 228, 255, 0.14);
+}
+
+.musicBar__icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.musicBar__meta {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.musicBar__title {
+  font-weight: 800;
+  font-size: 13px;
+  color: #f5f7ff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.musicBar__status {
+  font-size: 12px;
+  color: rgba(229, 236, 255, 0.72);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.musicBar__vol {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(229, 236, 255, 0.75);
+}
+
+.musicBar__volIcon {
+  font-size: 14px;
+}
+
+.musicBar__vol input {
+  width: 130px;
+}
+
+@media (max-width: 520px) {
+  .musicBar {
+    left: 10px;
+    right: 10px;
+    padding: 10px 10px;
+  }
+
+  .musicBar__status {
+    display: none;
+  }
+
+  .musicBar__vol input {
+    width: 90px;
+  }
 }
 
 .footer__grid {

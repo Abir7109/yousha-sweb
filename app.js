@@ -845,6 +845,120 @@
     });
   }
 
+  /* Background music */
+  function setupMusic() {
+    const audio = $("#bgMusic");
+    const toggle = $("#musicToggle");
+    const volume = $("#musicVolume");
+    const status = $("#musicStatus");
+
+    if (!audio || !toggle || !volume) return;
+
+    const MUSIC_KEY = "youshaweb:music:v1";
+
+    let wantsOn = false;
+    let isPlaying = false;
+
+    // Defaults (soft)
+    let vol = 0.22;
+
+    try {
+      const raw = localStorage.getItem(MUSIC_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (typeof parsed?.on === "boolean") wantsOn = parsed.on;
+        if (typeof parsed?.volume === "number") vol = parsed.volume;
+      }
+    } catch {
+      // ignore
+    }
+
+    function clamp01(n) {
+      return Math.max(0, Math.min(1, n));
+    }
+
+    audio.volume = clamp01(vol);
+    volume.value = String(Math.round(audio.volume * 100));
+
+    function save() {
+      try {
+        localStorage.setItem(MUSIC_KEY, JSON.stringify({ on: wantsOn, volume: audio.volume }));
+      } catch {
+        // ignore
+      }
+    }
+
+    function setStatus(text) {
+      if (status) status.textContent = text;
+    }
+
+    function updateUi() {
+      toggle.setAttribute("aria-pressed", String(isPlaying));
+
+      const icon = toggle.querySelector(".musicBar__icon");
+      const text = toggle.querySelector(".musicBar__text");
+
+      if (isPlaying) {
+        if (icon) icon.textContent = "⏸";
+        if (text) text.textContent = "Pause";
+        setStatus("Now playing");
+      } else {
+        if (icon) icon.textContent = "▶";
+        if (text) text.textContent = "Play";
+        setStatus(wantsOn ? "Tap to resume" : "Tap play for music");
+      }
+    }
+
+    async function tryPlay() {
+      try {
+        await audio.play();
+        isPlaying = true;
+        wantsOn = true;
+        save();
+      } catch {
+        isPlaying = false;
+        wantsOn = false;
+        save();
+      }
+      updateUi();
+    }
+
+    toggle.addEventListener("click", async () => {
+      if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+        wantsOn = false;
+        save();
+        updateUi();
+      } else {
+        await tryPlay();
+      }
+    });
+
+    volume.addEventListener(
+      "input",
+      () => {
+        audio.volume = clamp01(Number(volume.value) / 100);
+        save();
+      },
+      { passive: true }
+    );
+
+    // If user previously enabled music, start after first user gesture.
+    if (wantsOn) {
+      setStatus("Tap anywhere to start music");
+      window.addEventListener(
+        "pointerdown",
+        () => {
+          tryPlay();
+        },
+        { once: true, capture: true, passive: true }
+      );
+    }
+
+    updateUi();
+  }
+
   /* Contact form (removed in markup, keep no-op for safety) */
   function setupContact() {
     // no form anymore
@@ -868,6 +982,7 @@
     setupReveals();
     setupTypewriter();
     setupContact();
+    setupMusic();
 
     // Prefer to hide the loader only after the gallery has had a
     // chance to load its images, so the first scroll into the
