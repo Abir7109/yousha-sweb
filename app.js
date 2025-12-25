@@ -488,7 +488,7 @@
 
   async function buildGallery() {
     const grid = $("#galleryGrid");
-    if (!grid) return;
+    if (!grid) return null;
 
     const presets = [
       { title: "Neon Glow", a: "#ff3df2", b: "#3df5ff" },
@@ -557,6 +557,7 @@
     runtime.lightbox.items = items;
 
     const frag = document.createDocumentFragment();
+    const imgPromises = [];
 
     for (const it of items) {
       const tile = document.createElement("div");
@@ -573,12 +574,23 @@
       img.decoding = "async";
       img.alt = it.caption;
       img.src = it.src;
-      img.addEventListener(
-        "error",
-        () => {
-          img.src = it.fallback;
-        },
-        { once: true }
+
+      // Track when each image finishes loading (or fails) so we can
+      // keep the loader on screen until the gallery is ready.
+      imgPromises.push(
+        new Promise((resolve) => {
+          if (img.complete && img.naturalWidth > 0) {
+            resolve();
+            return;
+          }
+
+          const done = () => resolve();
+          img.addEventListener("load", done, { once: true });
+          img.addEventListener("error", () => {
+            img.src = it.fallback;
+            resolve();
+          }, { once: true });
+        })
       );
 
       const cap = document.createElement("div");
@@ -604,8 +616,21 @@
     grid.innerHTML = "";
     grid.appendChild(frag);
 
+    // Wait for gallery images to be ready before we consider the
+    // page "fully loaded". Prevents flicker on some mobile GPUs.
+    try {
+      await Promise.race([
+        Promise.all(imgPromises),
+        new Promise((resolve) => setTimeout(resolve, 8000)), // safety cap
+      ]);
+    } catch {
+      // ignore
+    }
+
     // Re-run reveals after dynamic content.
     setupReveals();
+
+    return { itemsCount: items.length };
   }
 
   /* Lightbox */
@@ -820,20 +845,9 @@
     });
   }
 
-  /* Contact form */
+  /* Contact form (removed in markup, keep no-op for safety) */
   function setupContact() {
-    const form = $("#contactForm");
-    if (!form) return;
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const btn = form.querySelector("button[type=submit]");
-      if (btn) burstFromElement(btn, { emoji: "💖", count: 16, spread: 90 });
-
-      // Front-end demo only.
-      form.reset();
-    });
+    // no form anymore
   }
 
   /* Boot */
@@ -845,7 +859,7 @@
     setupControls();
 
     setupLightbox();
-    await buildGallery();
+    const galleryResult = await buildGallery();
 
     setupHero();
     setupPlayZone();
@@ -855,11 +869,16 @@
     setupTypewriter();
     setupContact();
 
-    // Hide loader on full load
-    window.addEventListener("load", hideLoader, { once: true });
-
-    // Also hide loader after a safety timeout.
-    window.setTimeout(hideLoader, 1600);
+    // Prefer to hide the loader only after the gallery has had a
+    // chance to load its images, so the first scroll into the
+    // gallery feels stable (especially on mobile like Honor 200).
+    if (galleryResult && galleryResult.itemsCount > 0) {
+      hideLoader();
+    } else {
+      // Fallback: hide loader on window load or after a short timeout.
+      window.addEventListener("load", hideLoader, { once: true });
+      window.setTimeout(hideLoader, 2000);
+    }
   }
 
   if (document.readyState === "loading") {

@@ -777,6 +777,21 @@ a {
   }
 }
 
+/* Also simplify FX on coarse-pointer devices (phones/tablets) */
+@media (pointer: coarse) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .tile__spark,
+  .sparkle,
+  .emojiLayer {
+    display: none !important;
+  }
+}
+
 .social {
   display: inline-flex;
   align-items: center;
