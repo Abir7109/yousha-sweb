@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "generatedAt": "2025-12-25T12:41:56.2897010+06:00",
+  "count": 20,
+  "items": [
+    {
+      "id": 0,
+      "src": "assets/gallery/1.jpg",
+      "title": "Golden Hour Glow",
+      "caption": "Chasing sunsets & catching dreams ✨",
+      "original": "IMG_20250823_185125.jpg"
+    },
+    {
+      "id": 1,
+      "src": "assets/gallery/2.jpg",
+      "title": "Main Character Energy",
+      "caption": "Living life like a movie scene 🎬",
+      "original": "IMG_20250817_181910.jpg"
+    },
+    {
+      "id": 2,
+      "src": "assets/gallery/3.jpg",
+      "title": "Daydream Believer",
+      "caption": "Lost in thoughts, found in moments 💭",
+      "original": "IMG_20250809_161842.jpg"
+    },
+    {
+      "id": 3,
+      "src": "assets/gallery/4.jpg",
+      "title": "Soft & Serene",
+      "caption": "Peace looks good on me 🌸",
+      "original": "IMG_20250814_142934.jpg"
+    },
+    {
+      "id": 4,
+      "src": "assets/gallery/5.jpg",
+      "title": "Vibe Check",
+      "caption": "Good vibes only, always 🦋",
+      "original": "IMG_20250817_190609.jpg"
+    },
+    {
+      "id": 5,
+      "src": "assets/gallery/6.jpg",
+      "title": "Effortlessly Me",
+      "caption": "No filter needed, just magic 💫",
+      "original": "IMG_20250809_161147 (2).jpg"
+    },
+    {
+      "id": 6,
+      "src": "assets/gallery/7.jpg",
+      "title": "Confident Queen",
+      "caption": "Crown adjusted, ready to slay 👑",
+      "original": "IMG_20250809_161342.jpg"
+    },
+    {
+      "id": 7,
+      "src": "assets/gallery/8.jpg",
+      "title": "Sweet Escape",
+      "caption": "Finding beauty in every moment 🌷",
+      "original": "IMG_20250809_161328.jpg"
+    },
+    {
+      "id": 8,
+      "src": "assets/gallery/9.jpg",
+      "title": "Sparkle Season",
+      "caption": "Born to shine, never to blend in ✨",
+      "original": "IMG_20250817_181912.jpg"
+    },
+    {
+      "id": 9,
+      "src": "assets/gallery/10.jpg",
+      "title": "Aesthetic Mood",
+      "caption": "Creating my own sunshine ☀️",
+      "original": "IMG_20250817_180716.jpg"
+    },
+    {
+      "id": 10,
+      "src": "assets/gallery/11.jpg",
+      "title": "Midnight Magic",
+      "caption": "When the stars align 🌙",
+      "original": "IMG_20250830_185551.jpg"
+    },
+    {
+      "id": 11,
+      "src": "assets/gallery/12.jpg",
+      "title": "Dreamy Daze",
+      "caption": "Floating through life gracefully 🪷",
+      "original": "IMG_20250814_142903.jpg"
+    },
+    {
+      "id": 12,
+      "src": "assets/gallery/13.jpg",
+      "title": "Bold & Beautiful",
+      "caption": "Fearless and fabulous 🔥",
+      "original": "IMG_20250817_190550.jpg"
+    },
+    {
+      "id": 13,
+      "src": "assets/gallery/14.jpg",
+      "title": "Sunset Soul",
+      "caption": "Golden moments, golden memories 🌅",
+      "original": "IMG_20250823_182413.jpg"
+    },
+    {
+      "id": 14,
+      "src": "assets/gallery/15.jpg",
+      "title": "Pure Radiance",
+      "caption": "Glowing from the inside out 💖",
+      "original": "IMG_20250809_161147.jpg"
+    },
+    {
+      "id": 15,
+      "src": "assets/gallery/16.jpg",
+      "title": "Star Quality",
+      "caption": "Making every moment count ⭐",
+      "original": "IMG_20250904_191152.jpg"
+    },
+    {
+      "id": 16,
+      "src": "assets/gallery/17.jpg",
+      "title": "Wanderlust",
+      "caption": "Adventure awaits, let's go! 🌍",
+      "original": "IMG_3590.JPG"
+    },
+    {
+      "id": 17,
+      "src": "assets/gallery/18.jpg",
+      "title": "Chill Mode",
+      "caption": "Relaxed & ready for anything 🎧",
+      "original": "IMG_3599.JPG"
+    },
+    {
+      "id": 18,
+      "src": "assets/gallery/19.jpg",
+      "title": "Candid Charm",
+      "caption": "Caught in the moment 📸",
+      "original": "IMG_3598.JPG"
+    },
+    {
+      "id": 19,
+      "src": "assets/gallery/20.jpg",
+      "title": "Signature Style",
+      "caption": "Fashion is my expression 💅",
+      "original": "IMG_3600.JPG"
+    }
+  ]
+}

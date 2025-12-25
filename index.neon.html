@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0620" />
+
+    <title>Youshas’Web</title>
+    <meta name="description" content="A vibrant, animated showcase of Yousha — sparkles, emojis, and personality." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- Loading overlay -->
+    <div id="loader" class="loader" role="status" aria-live="polite">
+      <div class="loader__card">
+        <div class="loader__portrait" aria-hidden="true"></div>
+        <div class="loader__sparkles" aria-hidden="true"></div>
+        <p class="loader__text">Loading Youshas’Web…</p>
+        <div class="loader__bar" aria-hidden="true"><span></span></div>
+      </div>
+    </div>
+
+    <header class="site-header" id="top">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="#home">
+          <span class="brand__script">Yousha</span><span class="brand__dot">’</span><span class="brand__web">Web</span>
+        </a>
+
+        <button id="menuBtn" class="nav__menu" type="button" aria-expanded="false" aria-controls="navLinks">
+          <span class="nav__menuIcon" aria-hidden="true"></span>
+          <span class="nav__menuText">Menu</span>
+        </button>
+
+        <div id="navLinks" class="nav__links" data-open="false">
+          <a class="nav__link" href="#home" data-emoji="✨">Home</a>
+          <a class="nav__link" href="#gallery" data-emoji="📸">Gallery</a>
+          <a class="nav__link" href="#about" data-emoji="💖">About</a>
+          <a class="nav__link" href="#contact" data-emoji="📩">Contact</a>
+
+          <div class="nav__controls" aria-label="Effects controls">
+            <button id="fxBtn" class="chip" type="button" aria-pressed="true" title="Toggle effects intensity">
+              FX: High
+            </button>
+            <button id="motionBtn" class="chip" type="button" aria-pressed="false" title="Reduce motion">
+              Motion: On
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="section hero" id="home">
+        <div class="hero__bg" aria-hidden="true"></div>
+
+        <div class="container hero__grid">
+          <div class="hero__copy">
+            <p class="kicker">✨ Vibrant • Smart • Magnetic</p>
+            <h1 class="hero__title">
+              <span class="gradText">Welcome to Youshas’Web</span>
+            </h1>
+            <p class="hero__subtitle">
+              A sparkling, emoji-filled showcase of Yousha’s personality — stylish, energetic, and impossible to ignore.
+            </p>
+
+            <div class="hero__cta">
+              <a class="btn btn--primary" href="#gallery">View Gallery</a>
+              <a class="btn btn--ghost" href="#about">About Yousha</a>
+            </div>
+
+            <p class="micro">Tip: Tap the portrait for a ✨ burst.</p>
+          </div>
+
+          <div class="hero__visual">
+            <button id="portraitBtn" class="portrait" type="button" aria-label="Yousha portrait (tap for sparkle)">
+              <span class="portrait__ring" aria-hidden="true"></span>
+              <span class="portrait__label" aria-hidden="true">Tap for sparkle ✨</span>
+            </button>
+            <div id="heroFx" class="fx" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <a class="scrollHint" href="#gallery" aria-label="Scroll to gallery">
+          <span class="scrollHint__dot" aria-hidden="true"></span>
+          <span class="scrollHint__text">Scroll</span>
+        </a>
+      </section>
+
+      <!-- GALLERY -->
+      <section class="section" id="gallery">
+        <div class="container">
+          <div class="sectionHead">
+            <h2 class="sectionTitle">Gallery</h2>
+            <p class="sectionSub">Tap any tile for a full view + emoji burst.</p>
+          </div>
+
+          <div class="gallery" id="galleryGrid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="section section--alt" id="about">
+        <div class="container about">
+          <div class="about__bio">
+            <h2 class="sectionTitle">About Yousha</h2>
+            <p class="type" data-typewriter>
+              Hi! I’m Yousha ✨ — curious, creative, and always leveling up. I love turning ideas into moments that feel fun,
+              bold, and unforgettable. 💖
+            </p>
+
+            <div class="pillRow reveal">
+              <span class="pill">Neon energy</span>
+              <span class="pill">Confident vibes</span>
+              <span class="pill">Creative spark</span>
+            </div>
+          </div>
+
+          <div class="about__timeline">
+            <h3 class="subTitle">Journey</h3>
+            <ol class="timeline" aria-label="Yousha timeline">
+              <li class="timeline__item reveal">
+                <span class="timeline__icon" aria-hidden="true">🌸</span>
+                <div>
+                  <p class="timeline__title">The start</p>
+                  <p class="timeline__text">Where the sparkle began.</p>
+                </div>
+              </li>
+              <li class="timeline__item reveal">
+                <span class="timeline__icon" aria-hidden="true">🔥</span>
+                <div>
+                  <p class="timeline__title">Glow-up era</p>
+                  <p class="timeline__text">Big goals. Bigger energy.</p>
+                </div>
+              </li>
+              <li class="timeline__item reveal">
+                <span class="timeline__icon" aria-hidden="true">🎉</span>
+                <div>
+                  <p class="timeline__title">Now</p>
+                  <p class="timeline__text">Creating, learning, and shining.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- PLAY ZONE -->
+      <section class="section" id="play">
+        <div class="container">
+          <div class="sectionHead">
+            <h2 class="sectionTitle">Play Zone</h2>
+            <p class="sectionSub">Effects are optional (and mobile-friendly). Turn them on when you want extra sparkle.</p>
+          </div>
+
+          <div class="cards">
+            <div class="card reveal">
+              <h3 class="card__title">Emoji Rain</h3>
+              <p class="card__text">A quick burst of falling emojis (off by default).</p>
+              <button id="rainBtn" class="btn btn--primary" type="button" aria-pressed="false">Start Emoji Rain</button>
+            </div>
+
+            <div class="card reveal">
+              <h3 class="card__title">Cursor Trail</h3>
+              <p class="card__text">Best on desktop. On Android, this stays off automatically.</p>
+              <button id="trailBtn" class="btn btn--ghost" type="button" aria-pressed="false">Enable Trail</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="section section--alt" id="contact">
+        <div class="container contact">
+          <div class="contact__copy">
+            <h2 class="sectionTitle">Contact</h2>
+            <p class="sectionSub">Send a message — and we’ll make something unforgettable. ✨</p>
+
+            <div class="socialRow" aria-label="Social links">
+              <a class="social" href="#" aria-label="Instagram" data-emoji="📷">IG</a>
+              <a class="social" href="#" aria-label="TikTok" data-emoji="🎵">TT</a>
+              <a class="social" href="#" aria-label="Twitter / X" data-emoji="💬">X</a>
+            </div>
+          </div>
+
+          <form class="form" id="contactForm">
+            <label class="field">
+              <span>Name</span>
+              <input name="name" autocomplete="name" required />
+            </label>
+            <label class="field">
+              <span>Email</span>
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
+            <label class="field">
+              <span>Message</span>
+              <textarea name="message" rows="4" required></textarea>
+            </label>
+
+            <button class="btn btn--primary" type="submit">Send Message</button>
+            <p class="form__note">(This is a front-end demo — we can wire it to email or a backend next.)</p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__grid">
+        <p class="footer__brand">Made with <span aria-hidden="true">✨</span> &amp; <span aria-hidden="true">💖</span> at Youshas’Web.</p>
+        <a class="footer__top" href="#top">Back to top</a>
+      </div>
+      <div class="footer__spark" aria-hidden="true"></div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+      <button id="lightboxClose" class="lightbox__close" type="button" aria-label="Close">×</button>
+      <button id="lightboxPrev" class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Previous">‹</button>
+      <button id="lightboxNext" class="lightbox__nav lightbox__nav--next" type="button" aria-label="Next">›</button>
+      <figure class="lightbox__figure">
+        <img id="lightboxImg" alt="" />
+        <figcaption id="lightboxCap" class="lightbox__cap"></figcaption>
+      </figure>
+    </div>
+
+    <div id="emojiLayer" class="emojiLayer" aria-hidden="true"></div>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
