@@ -766,6 +766,15 @@ a {
   .tile__spark {
     display: none;
   }
+
+  /* Disable sparkles / emoji overlay on very small screens */
+  .sparkle {
+    display: none !important;
+  }
+
+  .emojiLayer {
+    display: none !important;
+  }
 }
 
 .social {
