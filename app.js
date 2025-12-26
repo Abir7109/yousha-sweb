@@ -4,6 +4,7 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
+  const API_BASE = document.querySelector('meta[name="yousha-api-base"]')?.content?.trim() || "";
   const STORE_KEY = "youshaweb:prefs:v1";
 
   const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)");
@@ -456,6 +457,30 @@
   }
 
   async function loadGalleryManifest() {
+    // First try live photos from the admin API (if configured)
+    if (API_BASE) {
+      try {
+        const res = await fetch(`${API_BASE}/api/public/photos`, { cache: "no-store" });
+        if (res.ok) {
+          const list = await res.json();
+          if (Array.isArray(list) && list.length > 0) {
+            return {
+              items: list.map((p, idx) => ({
+                id: idx,
+                src: p.imageUrl,
+                title: p.title || "Photo",
+                caption: p.caption || (p.title || "Photo"),
+                original: p.id,
+              })),
+            };
+          }
+        }
+      } catch {
+        // fall through to static manifest
+      }
+    }
+
+    // Fallback to static manifest.json bundled with the site
     try {
       const res = await fetch("assets/gallery/manifest.json", { cache: "no-store" });
       if (!res.ok) return null;
@@ -570,7 +595,9 @@
 
       const img = document.createElement("img");
       img.className = "tile__img";
-      img.loading = "lazy";
+      // We intentionally eager-load to reduce GPU flicker on some Android devices
+      // when entering the gallery (images are already decoded by the time you scroll).
+      img.loading = "eager";
       img.decoding = "async";
       img.alt = it.caption;
       img.src = it.src;
@@ -900,18 +927,56 @@
       }
     }
 
-    async function tryPlay() {
+    // Keep UI state in sync even if playback is changed elsewhere.
+    audio.addEventListener("play", () => {
+      isPlaying = true;
+      wantsOn = true;
+      save();
+      updateUi();
+    });
+
+    audio.addEventListener("pause", () => {
+      isPlaying = false;
+      updateUi();
+    });
+
+    audio.addEventListener("error", () => {
+      // If the media fails to load/decode, show a useful message.
+      const code = audio.error?.code;
+      const label =
+        code === 1 ? "aborted" :
+        code === 2 ? "network error" :
+        code === 3 ? "decode error" :
+        code === 4 ? "unsupported format" :
+        "error";
+      isPlaying = false;
+      wantsOn = false;
+      save();
+      setStatus(`Music ${label}`);
+      updateUi();
+    });
+
+    async function tryPlay(reason = "") {
+      setStatus(reason ? `Loading… (${reason})` : "Loading…");
+
       try {
         await audio.play();
-        isPlaying = true;
-        wantsOn = true;
-        save();
-      } catch {
+        // "play" event will update state.
+      } catch (err) {
+        console.warn("Music play() failed", err);
         isPlaying = false;
         wantsOn = false;
         save();
+
+        // Common cases: autoplay blocked / network / unsupported.
+        const msg =
+          err?.name === "NotAllowedError" ? "Tap play again" :
+          err?.name === "NotSupportedError" ? "Unsupported audio" :
+          "Couldn't start";
+
+        setStatus(msg);
+        updateUi();
       }
-      updateUi();
     }
 
     toggle.addEventListener("click", async () => {
@@ -922,7 +987,7 @@
         save();
         updateUi();
       } else {
-        await tryPlay();
+        await tryPlay("tap");
       }
     });
 
@@ -932,7 +997,7 @@
       window.addEventListener(
         "pointerdown",
         () => {
-          tryPlay();
+          tryPlay("gesture");
         },
         { once: true, capture: true, passive: true }
       );
@@ -953,18 +1018,24 @@
 
     setupMenu();
     setupControls();
-
     setupLightbox();
-    const galleryResult = await buildGallery();
 
+    // Set up interactive UI immediately (don’t block on gallery preloading).
     setupHero();
     setupPlayZone();
     setupTrail();
-
     setupReveals();
     setupTypewriter();
     setupContact();
     setupMusic();
+
+    // Build/preload gallery in the background, then hide loader when ready.
+    let galleryResult = null;
+    try {
+      galleryResult = await buildGallery();
+    } catch {
+      galleryResult = null;
+    }
 
     // Prefer to hide the loader only after the gallery has had a
     // chance to load its images, so the first scroll into the
