@@ -503,6 +503,8 @@
   }
 
   async function loadGalleryManifest() {
+    let apiItems = [];
+
     // First try live photos from the admin API (if configured)
     if (API_BASE) {
       try {
@@ -510,32 +512,56 @@
         if (res.ok) {
           const list = await res.json();
           if (Array.isArray(list) && list.length > 0) {
-            return {
-              items: list.map((p, idx) => ({
-                id: idx,
-                src: p.imageUrl,
-                title: p.title || "Photo",
-                caption: p.caption || (p.title || "Photo"),
-                original: p.id,
-              })),
-            };
+            apiItems = list.map((p, idx) => ({
+              id: idx,
+              src: p.imageUrl,
+              title: p.title || "Photo",
+              caption: p.caption || (p.title || "Photo"),
+              original: p.id,
+            }));
           }
         }
       } catch {
-        // fall through to static manifest
+        // ignore API errors and fall back to static data
       }
     }
 
-    // Fallback to static manifest.json bundled with the site
+    // Always attempt to load the original static manifest as well,
+    // so photos imported when building the site remain visible.
+    let staticItems = [];
     try {
       const res = await fetch("assets/gallery/manifest.json", { cache: "no-store" });
-      if (!res.ok) return null;
-      const json = await res.json();
-      if (!json || !Array.isArray(json.items) || json.items.length < 1) return null;
-      return json;
+      if (res.ok) {
+        const json = await res.json();
+        if (json && Array.isArray(json.items) && json.items.length > 0) {
+          staticItems = json.items;
+        }
+      }
     } catch {
-      return null;
+      // ignore, staticItems stays empty
     }
+
+    // If we have both, merge: API photos first, then any static photos
+    // whose src isn't already provided by the API.
+    const seenSrc = new Set(apiItems.map((it) => it.src));
+    const merged = [
+      ...apiItems,
+      ...staticItems
+        .filter((m) => typeof m?.src === "string" && m.src.trim() && !seenSrc.has(m.src.trim()))
+        .map((m, idx) => ({
+          id: apiItems.length + idx,
+          src: m.src.trim(),
+          title: typeof m.title === "string" && m.title.trim() ? m.title.trim() : "Photo",
+          caption:
+            typeof m.caption === "string" && m.caption.trim()
+              ? m.caption.trim()
+              : (typeof m.title === "string" && m.title.trim() ? m.title.trim() : "Photo"),
+          original: m.id ?? m.original ?? null,
+        })),
+    ];
+
+    if (merged.length < 1) return null;
+    return { items: merged };
   }
 
   function probeFirstLoad(urls) {
