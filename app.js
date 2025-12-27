@@ -1128,7 +1128,10 @@
           const res = await fetch(`${API_BASE}/api/admin/music`, { 
             headers: { 'Cache-Control': 'no-cache' }
           });
-          if (!res.ok) return;
+          if (!res.ok) {
+            // Silently fail for 401/403 (authentication not set up for public access)
+            return;
+          }
           const tracks = await res.json();
           
           if (tracks && tracks.length > 0) {
