@@ -46,16 +46,6 @@
     <!-- Scroll Progress Bar -->
     <div id="scrollProgress"></div>
 
-    <!-- Dark Mode Toggle -->
-    <button id="darkModeToggle" type="button" aria-label="Toggle dark mode">
-      <span id="themeIcon">🌙</span>
-    </button>
-
-    <!-- Confetti Cannon Button -->
-    <button id="confettiButton" type="button" aria-label="Launch confetti">
-      🎉
-    </button>
-
     <!-- Loading overlay -->
     <div id="loader" class="loader" role="status" aria-live="polite">
       <div class="loader__aura" aria-hidden="true"></div>
@@ -276,7 +266,7 @@
     <!-- Background music (original romantic loop) -->
     <audio id="bgMusic" src="assets/music/romantic-loop.wav" preload="metadata" loop></audio>
 
-    <!-- Floating music controller bar -->
+    <!-- Enhanced Music Controller Bar -->
     <div id="musicBar" class="musicBar" role="region" aria-label="Background music controls">
       <button id="musicToggle" class="musicBar__btn" type="button" aria-pressed="false">
         <span class="musicBar__icon" aria-hidden="true">▶</span>
@@ -284,9 +274,29 @@
       </button>
 
       <div class="musicBar__meta">
-        <div class="musicBar__title">Romantic music</div>
+        <div class="musicBar__title" id="musicTitle">Romantic music</div>
         <div id="musicStatus" class="musicBar__status">Tap play for music</div>
       </div>
+
+      <!-- Music Visualizer -->
+      <div class="musicBar__visualizer" id="visualizer" aria-hidden="true">
+        <span class="visualizer__bar"></span>
+        <span class="visualizer__bar"></span>
+        <span class="visualizer__bar"></span>
+        <span class="visualizer__bar"></span>
+        <span class="visualizer__bar"></span>
+      </div>
+
+      <!-- Volume Control -->
+      <div class="musicBar__volume">
+        <span class="volume__icon">🔊</span>
+        <input type="range" id="volumeSlider" class="volume__slider" min="0" max="100" value="22" aria-label="Volume control" />
+      </div>
+
+      <!-- Playlist Selector -->
+      <select id="playlistSelector" class="musicBar__playlist" aria-label="Choose track">
+        <option value="0">Track 1</option>
+      </select>
     </div>
 
     <script src="app.js" defer></script>

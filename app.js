@@ -1096,54 +1096,86 @@
     }, { passive: true });
   }
 
-  /* Dark Mode Toggle */
-  function setupDarkMode() {
-    const toggle = $("#darkModeToggle");
-    const icon = $("#themeIcon");
-    if (!toggle || !icon) return;
+  /* Enhanced Music Features */
+  function setupMusicEnhancements() {
+    const audio = $("#bgMusic");
+    const visualizer = $("#visualizer");
+    const volumeSlider = $("#volumeSlider");
+    const playlistSelector = $("#playlistSelector");
+    const musicTitle = $("#musicTitle");
+    
+    if (!audio) return;
 
-    const DARK_MODE_KEY = "youshaweb:darkmode:v1";
-    let isDark = localStorage.getItem(DARK_MODE_KEY) === "true";
-
-    function applyMode() {
-      if (isDark) {
-        document.body.classList.add("dark-mode");
-        icon.textContent = "☀️";
-      } else {
-        document.body.classList.remove("dark-mode");
-        icon.textContent = "🌙";
-      }
-      localStorage.setItem(DARK_MODE_KEY, isDark);
+    // Visualizer Control
+    if (visualizer) {
+      audio.addEventListener("play", () => {
+        visualizer.classList.remove("inactive");
+      });
+      
+      audio.addEventListener("pause", () => {
+        visualizer.classList.add("inactive");
+      });
+      
+      // Start inactive
+      visualizer.classList.add("inactive");
     }
 
-    applyMode();
-
-    toggle.addEventListener("click", () => {
-      isDark = !isDark;
-      applyMode();
-      burstFromElement(toggle, { emoji: isDark ? "🌙" : "☀️", count: 8 });
-    });
-  }
-
-  /* Confetti Cannon */
-  function setupConfetti() {
-    const button = $("#confettiButton");
-    if (!button) return;
-
-    button.addEventListener("click", () => {
-      const emojis = ["🎉", "🎊", "✨", "💖", "🌈", "🌟", "💥", "🎇"];
-      const rect = button.getBoundingClientRect();
-      const x = rect.left + rect.width / 2;
-      const y = rect.top + rect.height / 2;
-
-      // Create massive confetti burst
-      for (let i = 0; i < 30; i++) {
-        setTimeout(() => {
-          const emoji = emojis[Math.floor(Math.random() * emojis.length)];
-          burstAt(x, y, { emoji, count: 8, spread: 150 });
-        }, i * 50);
+    // Volume Control
+    if (volumeSlider) {
+      volumeSlider.value = Math.round(audio.volume * 100);
+      
+      volumeSlider.addEventListener("input", (e) => {
+        audio.volume = e.target.value / 100;
+        localStorage.setItem("youshaweb:volume:v1", e.target.value);
+      });
+      
+      // Restore saved volume
+      const savedVolume = localStorage.getItem("youshaweb:volume:v1");
+      if (savedVolume) {
+        volumeSlider.value = savedVolume;
+        audio.volume = savedVolume / 100;
       }
-    });
+    }
+
+    // Playlist Support
+    if (playlistSelector && musicTitle) {
+      // Load playlist from API
+      async function loadPlaylist() {
+        if (!API_BASE) return;
+        try {
+          const res = await fetch(`${API_BASE}/api/admin/music`, { 
+            headers: { 'Cache-Control': 'no-cache' }
+          });
+          if (!res.ok) return;
+          const tracks = await res.json();
+          
+          if (tracks && tracks.length > 0) {
+            playlistSelector.innerHTML = '';
+            tracks.forEach((track, idx) => {
+              const option = document.createElement("option");
+              option.value = track.audioUrl;
+              option.textContent = track.title || `Track ${idx + 1}`;
+              option.dataset.title = track.title || `Track ${idx + 1}`;
+              playlistSelector.appendChild(option);
+            });
+          }
+        } catch (err) {
+          console.log("Playlist load failed, using default");
+        }
+      }
+      
+      loadPlaylist();
+      
+      playlistSelector.addEventListener("change", (e) => {
+        const wasPlaying = !audio.paused;
+        const selectedOption = e.target.selectedOptions[0];
+        audio.src = e.target.value;
+        musicTitle.textContent = selectedOption.dataset.title || selectedOption.textContent;
+        if (wasPlaying) {
+          audio.play().catch(() => {});
+        }
+      });
+    }
   }
 
   /* Parallax Effect */
@@ -1180,8 +1212,7 @@
 
     // NEW FEATURES
     setupScrollProgress();
-    setupDarkMode();
-    setupConfetti();
+    setupMusicEnhancements();
     setupParallax();
 
     // Build/preload gallery in the background, then hide loader when ready.
