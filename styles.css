@@ -991,9 +991,9 @@ textarea:focus {
   display: grid;
   place-items: center;
   background:
-    radial-gradient(900px 600px at 15% 0%, rgba(152, 228, 255, 0.25), transparent 65%),
-    radial-gradient(900px 600px at 85% 100%, rgba(104, 126, 255, 0.35), transparent 65%),
-    linear-gradient(180deg, #020617, #020617);
+    radial-gradient(900px 600px at 15% 0%, rgba(252, 231, 243, 0.9), transparent 65%),
+    radial-gradient(900px 600px at 85% 100%, rgba(219, 234, 254, 0.9), transparent 65%),
+    linear-gradient(180deg, #0b1120, #020617);
 }
 
 .loader.is-hidden {
@@ -1036,110 +1036,148 @@ textarea:focus {
 }
 
 .loader__card {
-  width: min(360px, calc(100% - 40px));
-  border-radius: 28px;
-  border: 1px solid rgba(148, 163, 184, 0.6);
+  width: min(320px, calc(100% - 40px));
+  border-radius: 26px;
+  border: 1px solid rgba(248, 250, 252, 0.3);
   background:
-    radial-gradient(circle at 0 0, rgba(152, 228, 255, 0.18), transparent 55%),
-    rgba(15, 23, 42, 0.98);
-  padding: 20px 18px 16px;
-  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.9);
+    radial-gradient(circle at 0 0, rgba(251, 207, 232, 0.5), transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(191, 219, 254, 0.5), transparent 55%),
+    rgba(15, 23, 42, 0.96);
+  padding: 18px 16px 14px;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.85);
   position: relative;
   overflow: hidden;
 }
 
+.loader__card--cute::before {
+  content: '♡';
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 16px;
+  opacity: 0.7;
+}
+
 .loader__avatar {
-  width: 104px;
-  height: 104px;
-  border-radius: 999px;
+  width: 96px;
+  height: 96px;
+  border-radius: 30px;
   margin-inline: auto;
   position: relative;
   display: grid;
   place-items: center;
 }
 
-.loader__ring {
+.loader__avatar--soft::before {
+  content: '';
   position: absolute;
-  inset: 0;
+  inset: -10px;
   border-radius: inherit;
-  border: 2px solid transparent;
-}
-
-.loader__ring--outer {
-  border-image: conic-gradient(from 180deg, #38bdf8, #6366f1, #38bdf8) 1;
-  filter: blur(0.5px);
-  animation: spin 7s linear infinite;
-}
-
-.loader__ring--inner {
-  inset: 8px;
-  border-image: conic-gradient(from 0deg, rgba(248, 250, 252, 0.8), transparent, rgba(148, 163, 184, 0.8)) 1;
-  opacity: 0.6;
-  animation: spin 4s linear infinite reverse;
+  background: radial-gradient(circle, rgba(251, 207, 232, 0.55), transparent 60%);
+  opacity: 0.8;
+  filter: blur(8px);
+  z-index: -1;
 }
 
 .loader__avatarImg {
-  width: 76px;
-  height: 76px;
+  width: 100%;
+  height: 100%;
   border-radius: inherit;
-  border: 2px solid rgba(148, 163, 184, 0.75);
+  border: 2px solid rgba(248, 250, 252, 0.8);
   background-image: url("assets/yousha.jpg"),
-    linear-gradient(135deg, rgba(152, 228, 255, 0.22), rgba(104, 126, 255, 0.2));
+    linear-gradient(135deg, rgba(251, 207, 232, 0.7), rgba(191, 219, 254, 0.7));
   background-size: cover, cover;
   background-position: center, center;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
 }
 
+.loader__avatarTag {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(248, 250, 252, 0.4);
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(248, 250, 252, 0.9);
+}
+
 .loader__kicker {
-  margin: 14px 0 0;
+  margin: 18px 0 2px;
   text-align: center;
-  font-size: 13px;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(148, 163, 184, 0.9);
+  color: rgba(248, 250, 252, 0.8);
+}
+
+.loader__kicker--cute {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 .loader__brand {
-  margin: 2px 0 4px;
+  margin: 0 0 4px;
   text-align: center;
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.04em;
-  background: linear-gradient(90deg, #98e4ff, #80b3ff, #687eff);
+  background: linear-gradient(90deg, #fecaca, #fcd34d, #bfdbfe);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
+.loader__brand--cute {
+  font-family: 'Pacifico', cursive;
+  font-size: 24px;
+}
+
 .loader__text {
-  margin: 4px 0 10px;
+  margin: 4px 0 8px;
   text-align: center;
   font-size: 13px;
-  color: rgba(209, 213, 219, 0.95);
+  color: rgba(248, 250, 252, 0.9);
+}
+
+.loader__text--cute {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 .loader__dots {
   display: flex;
   justify-content: center;
   gap: 6px;
-  margin-top: 6px;
+  margin-top: 2px;
 }
 
-.loader__dots span {
-  width: 6px;
-  height: 6px;
+.loader__dots--cute span {
+  width: 7px;
+  height: 7px;
   border-radius: 999px;
-  background: linear-gradient(90deg, #98e4ff, #80b3ff);
-  opacity: 0.3;
+  background: linear-gradient(90deg, #fecaca, #bfdbfe);
+  opacity: 0.4;
   animation: loaderDots 1s ease-in-out infinite;
 }
 
-.loader__dots span:nth-child(2) {
-  animation-delay: 0.15s;
+.loader__dots--cute span:nth-child(2) {
+  animation-delay: 0.12s;
 }
 
-.loader__dots span:nth-child(3) {
-  animation-delay: 0.3s;
+.loader__dots--cute span:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+.loader__bubbleRow {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  display: flex;
+  gap: 4px;
+  font-size: 14px;
+  opacity: 0.9;
 }
 
 /* Lightbox */
