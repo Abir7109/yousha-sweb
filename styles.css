@@ -174,10 +174,22 @@ a {
   :root {
     --sparkle-count: 8;
   }
+  
+  body {
+    padding-bottom: calc(140px + env(safe-area-inset-bottom));
+  }
 
   .section {
-    padding: 62px 0;
+    padding: 50px 0;
     scroll-margin-top: 96px;
+  }
+  
+  .container {
+    width: calc(100% - 20px);
+  }
+  
+  .section::before {
+    font-size: 24px;
   }
 }
 
@@ -291,6 +303,41 @@ a {
   }
   50% {
     background-position: 100% 50%;
+  }
+}
+
+@media (max-width: 520px) {
+  .nav {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  
+  .brand {
+    padding: 8px 10px;
+  }
+  
+  .brand__script {
+    font-size: 16px;
+  }
+  
+  .nav__menu {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  
+  .nav__menuIcon {
+    width: 16px;
+    height: 10px;
+  }
+  
+  .nav__links {
+    padding: 12px;
+    gap: 8px;
+  }
+  
+  .nav__link {
+    padding: 10px 14px;
+    font-size: 14px;
   }
 }
 
@@ -795,6 +842,43 @@ a {
   text-transform: uppercase;
 }
 
+@media (max-width: 520px) {
+  .hero {
+    padding-top: 40px;
+  }
+  
+  .hero__title {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+  
+  .hero__subtitle {
+    font-size: 14px;
+  }
+  
+  .hero__cta {
+    gap: 10px;
+  }
+  
+  .btn {
+    padding: 12px 18px;
+    font-size: 14px;
+    min-height: 44px;
+  }
+  
+  .portrait {
+    width: 240px;
+  }
+  
+  .portrait__ring {
+    inset: -30px;
+  }
+  
+  .portrait__label {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}
+
 @media (min-width: 920px) {
   .hero {
     padding-top: 70px;
@@ -848,6 +932,22 @@ a {
   50% {
     opacity: 0.8;
     transform: translateY(-30px) scale(1.2);
+  }
+}
+
+@media (max-width: 520px) {
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .tile {
+    min-height: 200px;
+  }
+  
+  .tile__cap {
+    font-size: 12px;
+    padding: 8px 12px;
   }
 }
 
@@ -1143,15 +1243,53 @@ a {
   .contact {
     gap: 16px;
   }
+  
+  .pill {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+  
+  .card {
+    padding: 16px;
+  }
+  
+  .card__title {
+    font-size: 16px;
+  }
+  
+  .card__text {
+    font-size: 14px;
+  }
+  
+  .timeline__item {
+    grid-template-columns: 40px 1fr;
+    padding: 12px;
+  }
+  
+  .timeline__icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .timeline__title {
+    font-size: 14px;
+  }
+  
+  .timeline__text {
+    font-size: 13px;
+  }
 
   .socialRow {
-    flex-direction: column;
-    align-items: stretch;
+    gap: 8px;
   }
 
   .social {
     width: 100%;
     justify-content: flex-start;
+    padding: 12px 16px;
+    font-size: 14px;
+    min-height: 44px;
   }
 
   /* On small screens, keep reveals and gallery tiles simple to avoid flashing */
@@ -1302,19 +1440,74 @@ textarea:focus {
   transform: translateX(-50%);
   bottom: calc(12px + env(safe-area-inset-bottom));
   z-index: 110;
-  width: fit-content;
+  width: auto;
   max-width: calc(100% - 24px);
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 20px;
-  border-radius: 999px;
+  padding: 12px 16px;
+  border-radius: 24px;
   border: 2px solid rgba(255, 182, 225, 0.6);
   background: rgba(255, 255, 255, 0.98);
   color: var(--ink);
   box-shadow: 0 8px 32px rgba(218, 182, 252, 0.35);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
+}
+
+/* Mobile/Android Responsive */
+@media (max-width: 768px) {
+  .musicBar {
+    left: 12px;
+    right: 12px;
+    transform: none;
+    max-width: none;
+    width: auto;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 20px;
+    justify-content: space-between;
+  }
+  
+  .musicBar__btn {
+    flex: 0 0 auto;
+    padding: 10px 16px;
+    font-size: 14px;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .musicBar__meta {
+    flex: 1 1 100%;
+    order: 3;
+    text-align: center;
+    min-width: 100%;
+  }
+  
+  .musicBar__visualizer {
+    order: 1;
+    flex: 0 0 auto;
+  }
+  
+  .musicBar__volume {
+    order: 2;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+  
+  .volume__slider {
+    width: 60px;
+  }
+  
+  .musicBar__playlist {
+    order: 4;
+    flex: 1 1 100%;
+    width: 100%;
+    padding: 10px 12px;
+    min-height: 44px;
+    font-size: 13px;
+  }
 }
 
 @supports (backdrop-filter: blur(10px)) {
@@ -1520,14 +1713,42 @@ textarea:focus {
 
 @media (max-width: 520px) {
   .musicBar {
-    left: auto;
+    left: 10px;
     right: 10px;
-    max-width: calc(100% - 20px);
-    padding: 10px 10px;
+    max-width: none;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  
+  .musicBar__btn {
+    padding: 8px 12px;
+    font-size: 13px;
   }
 
   .musicBar__status {
     display: none;
+  }
+  
+  .musicBar__title {
+    font-size: 12px;
+  }
+  
+  .volume__slider {
+    width: 50px;
+  }
+  
+  .volume__icon {
+    font-size: 14px;
+  }
+  
+  .musicBar__playlist {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+  
+  .musicBar__visualizer {
+    padding: 0 6px;
+    height: 24px;
   }
 }
 
