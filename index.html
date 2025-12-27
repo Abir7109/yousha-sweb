@@ -45,11 +45,19 @@
   <body>
     <!-- Loading overlay -->
     <div id="loader" class="loader" role="status" aria-live="polite">
+      <div class="loader__aura" aria-hidden="true"></div>
       <div class="loader__card">
-        <div class="loader__portrait" aria-hidden="true"></div>
-        <div class="loader__sparkles" aria-hidden="true"></div>
-        <p class="loader__text">Loading Youshas’Web…</p>
-        <div class="loader__bar" aria-hidden="true"><span></span></div>
+        <div class="loader__avatar" aria-hidden="true">
+          <div class="loader__ring loader__ring--outer"></div>
+          <div class="loader__ring loader__ring--inner"></div>
+          <div class="loader__avatarImg"></div>
+        </div>
+        <p class="loader__kicker">Welcome to</p>
+        <p class="loader__brand">Youshas’Web</p>
+        <p class="loader__text">Polishing the glow…</p>
+        <div class="loader__dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
       </div>
     </div>
 
