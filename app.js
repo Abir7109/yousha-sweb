@@ -30,6 +30,13 @@
       index: 0,
       items: [],
     },
+    config: {
+      loaded: false,
+      heroKicker: null,
+      heroTitle: null,
+      heroSubtitle: null,
+      activeMusic: null,
+    },
   };
 
   function loadPrefs() {
@@ -191,6 +198,45 @@
     };
 
     window.setTimeout(tick, 300);
+  }
+
+  /* Load site config (hero text + active music) from API */
+  async function loadRemoteConfig() {
+    if (!API_BASE) return;
+    try {
+      const res = await fetch(`${API_BASE}/api/public/config`, { cache: "no-store" });
+      if (!res.ok) return;
+      const cfg = await res.json();
+
+      runtime.config.loaded = true;
+      runtime.config.heroKicker = cfg.heroKicker || null;
+      runtime.config.heroTitle = cfg.heroTitle || null;
+      runtime.config.heroSubtitle = cfg.heroSubtitle || null;
+      runtime.config.activeMusic = cfg.activeMusic || null;
+
+      // Apply hero text if DOM is ready
+      const kickerEl = document.querySelector(".kicker");
+      const titleSpan = document.querySelector(".hero__title .gradText");
+      const subtitleEl = document.querySelector(".hero__subtitle");
+
+      if (kickerEl && runtime.config.heroKicker) kickerEl.textContent = runtime.config.heroKicker;
+      if (titleSpan && runtime.config.heroTitle) titleSpan.textContent = runtime.config.heroTitle;
+      if (subtitleEl && runtime.config.heroSubtitle) {
+        // Keep the sparkle span but update surrounding text.
+        subtitleEl.innerHTML = runtime.config.heroSubtitle.replace(
+          /sparkling/i,
+          '<span class="sparkle-text">sparkling<\/span>'
+        );
+      }
+
+      // Apply music source if present and audio element exists
+      const audio = document.getElementById("bgMusic");
+      if (audio && runtime.config.activeMusic && runtime.config.activeMusic.audioUrl) {
+        audio.src = runtime.config.activeMusic.audioUrl;
+      }
+    } catch {
+      // ignore and keep static defaults
+    }
   }
 
   /* Sparkles */
@@ -1015,6 +1061,9 @@
   async function init() {
     loadPrefs();
     applyPrefs();
+
+    // Kick off remote config load in the background (hero + music)
+    loadRemoteConfig();
 
     setupMenu();
     setupControls();
