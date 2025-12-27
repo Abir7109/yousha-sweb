@@ -32,6 +32,90 @@
   --sparkle-count: 12;
 }
 
+/* Dark Mode Theme */
+body.dark-mode {
+  --bg0: #1a0b2e;
+  --bg1: #2d1b3d;
+  --ink: #f5e6ff;
+  --muted: rgba(229, 210, 255, 0.7);
+  --card: rgba(45, 27, 61, 0.8);
+  --card2: rgba(45, 27, 61, 0.95);
+  --stroke: rgba(218, 182, 252, 0.6);
+}
+
+/* Dark Mode Toggle Button */
+#darkModeToggle {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 182, 225, 0.5);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(218, 182, 252, 0.3);
+}
+
+#darkModeToggle:hover {
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: 0 6px 24px rgba(255, 182, 225, 0.5);
+}
+
+body.dark-mode #darkModeToggle {
+  background: rgba(45, 27, 61, 0.95);
+  border-color: rgba(218, 182, 252, 0.6);
+}
+
+/* Confetti Cannon Button */
+#confettiButton {
+  position: fixed;
+  bottom: calc(90px + env(safe-area-inset-bottom));
+  right: 20px;
+  z-index: 1000;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  background: linear-gradient(135deg, #ffb6e1, #dab6fc, #b4e4ff);
+  background-size: 200% 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(255, 182, 225, 0.5), 0 0 40px rgba(218, 182, 252, 0.3);
+  animation: confettiPulse 2s ease-in-out infinite;
+}
+
+@keyframes confettiPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 6px 20px rgba(255, 182, 225, 0.5), 0 0 40px rgba(218, 182, 252, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 8px 28px rgba(255, 182, 225, 0.7), 0 0 60px rgba(218, 182, 252, 0.5);
+  }
+}
+
+#confettiButton:hover {
+  transform: scale(1.15) rotate(10deg);
+  box-shadow: 0 10px 32px rgba(255, 182, 225, 0.8), 0 0 80px rgba(218, 182, 252, 0.6);
+}
+
+#confettiButton:active {
+  transform: scale(0.95);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -55,6 +139,19 @@ body {
   position: relative;
   overflow-x: hidden;
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><text y="20" font-size="20">✨</text></svg>') 12 12, auto;
+}
+
+/* Scroll Progress Bar */
+#scrollProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ffb6e1, #dab6fc, #b4e4ff, #ffd4b8, #c9f4e8);
+  width: 0%;
+  z-index: 9999;
+  transition: width 0.1s ease-out;
+  box-shadow: 0 0 10px rgba(255, 182, 225, 0.6), 0 0 20px rgba(218, 182, 252, 0.4);
 }
 
 /* Floating decorative elements */

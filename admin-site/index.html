@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Youshas’Web Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Production API base on Render -->
+    <meta name="yousha-api-base" content="https://yousha-admin-api.onrender.com" />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <div class="app-bg app-bg--one" aria-hidden="true"></div>
+      <div class="app-bg app-bg--two" aria-hidden="true"></div>
+
+      <!-- LOGIN VIEW -->
+      <section id="loginView" class="card auth reveal">
+        <h1 class="title">Youshas’Web Admin</h1>
+        <p class="subtitle">Sign in to manage photos, music & hero text.</p>
+
+        <form id="loginForm" class="form">
+          <label class="field">
+            <span>Email</span>
+            <input id="email" type="email" autocomplete="email" required />
+          </label>
+
+          <label class="field">
+            <span>Password</span>
+            <input
+              id="password"
+              type="password"
+              autocomplete="current-password"
+              minlength="6"
+              required
+            />
+          </label>
+
+          <button class="btn primary" type="submit">Sign in</button>
+          <p id="loginError" class="error"></p>
+        </form>
+      </section>
+
+      <!-- DASHBOARD -->
+      <section id="dashboard" class="dashboard hidden">
+        <header class="topbar card reveal">
+          <div>
+            <h1 class="title">Youshas’Web Admin</h1>
+            <p class="subtitle">Control gallery, music and hero section.</p>
+          </div>
+          <button id="logoutBtn" class="btn ghost">Log out</button>
+        </header>
+
+        <main class="grid">
+          <!-- HERO CONFIG -->
+          <section class="card reveal">
+            <h2 class="card-title">Hero Text</h2>
+            <p class="card-sub">Update the main heading on the website.</p>
+
+            <form id="heroForm" class="form">
+              <label class="field">
+                <span>Kicker</span>
+                <input id="heroKicker" type="text" />
+              </label>
+
+              <label class="field">
+                <span>Title</span>
+                <input id="heroTitle" type="text" />
+              </label>
+
+              <label class="field">
+                <span>Subtitle</span>
+                <textarea id="heroSubtitle" rows="3"></textarea>
+              </label>
+
+              <button class="btn primary" type="submit">Save hero text</button>
+              <p id="heroStatus" class="status"></p>
+            </form>
+          </section>
+
+          <!-- PHOTOS -->
+          <section class="card reveal">
+            <h2 class="card-title">Gallery Photos</h2>
+            <p class="card-sub">Upload & remove photos shown on the site.</p>
+
+            <form id="photoForm" class="form upload">
+              <label class="field">
+                <span>Image files</span>
+                <input id="photoFile" type="file" accept="image/*" multiple required />
+              </label>
+
+              <label class="field">
+                <span>Title</span>
+                <input id="photoTitle" type="text" placeholder="Optional" />
+              </label>
+
+              <label class="field">
+                <span>Caption</span>
+                <input id="photoCaption" type="text" placeholder="Optional" />
+              </label>
+
+              <button class="btn primary" type="submit">Upload photo</button>
+              <p id="photoStatus" class="status"></p>
+            </form>
+
+            <div id="photoList" class="list"></div>
+          </section>
+
+          <!-- MUSIC -->
+          <section class="card reveal">
+            <h2 class="card-title">Background Music</h2>
+            <p class="card-sub">
+              Upload romantic tracks and manage what plays on the site.
+            </p>
+
+            <form id="musicForm" class="form upload">
+              <label class="field">
+                <span>Track file</span>
+                <input id="musicFile" type="file" accept="audio/*" required />
+              </label>
+
+              <label class="field">
+                <span>Title</span>
+                <input id="musicTitle" type="text" placeholder="Optional" />
+              </label>
+
+              <button class="btn primary" type="submit">Upload track</button>
+              <p id="musicStatus" class="status"></p>
+            </form>
+
+            <div id="musicList" class="list"></div>
+          </section>
+        </main>
+      </section>
+    </div>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

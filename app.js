@@ -1083,6 +1083,80 @@
     // no form anymore
   }
 
+  /* Scroll Progress Bar */
+  function setupScrollProgress() {
+    const progressBar = $("#scrollProgress");
+    if (!progressBar) return;
+
+    window.addEventListener("scroll", () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      progressBar.style.width = scrolled + "%";
+    }, { passive: true });
+  }
+
+  /* Dark Mode Toggle */
+  function setupDarkMode() {
+    const toggle = $("#darkModeToggle");
+    const icon = $("#themeIcon");
+    if (!toggle || !icon) return;
+
+    const DARK_MODE_KEY = "youshaweb:darkmode:v1";
+    let isDark = localStorage.getItem(DARK_MODE_KEY) === "true";
+
+    function applyMode() {
+      if (isDark) {
+        document.body.classList.add("dark-mode");
+        icon.textContent = "☀️";
+      } else {
+        document.body.classList.remove("dark-mode");
+        icon.textContent = "🌙";
+      }
+      localStorage.setItem(DARK_MODE_KEY, isDark);
+    }
+
+    applyMode();
+
+    toggle.addEventListener("click", () => {
+      isDark = !isDark;
+      applyMode();
+      burstFromElement(toggle, { emoji: isDark ? "🌙" : "☀️", count: 8 });
+    });
+  }
+
+  /* Confetti Cannon */
+  function setupConfetti() {
+    const button = $("#confettiButton");
+    if (!button) return;
+
+    button.addEventListener("click", () => {
+      const emojis = ["🎉", "🎊", "✨", "💖", "🌈", "🌟", "💥", "🎇"];
+      const rect = button.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+
+      // Create massive confetti burst
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+          burstAt(x, y, { emoji, count: 8, spread: 150 });
+        }, i * 50);
+      }
+    });
+  }
+
+  /* Parallax Effect */
+  function setupParallax() {
+    const heroBg = $(".hero__bg");
+    if (!heroBg) return;
+
+    window.addEventListener("scroll", () => {
+      const scrolled = window.pageYOffset;
+      heroBg.style.transform = `translateY(${scrolled * 0.5}px)`;
+    }, { passive: true });
+  }
+
   /* Boot */
   async function init() {
     loadPrefs();
@@ -1095,7 +1169,7 @@
     setupControls();
     setupLightbox();
 
-    // Set up interactive UI immediately (don’t block on gallery preloading).
+    // Set up interactive UI immediately (don't block on gallery preloading).
     setupHero();
     setupPlayZone();
     setupTrail();
@@ -1103,6 +1177,12 @@
     setupTypewriter();
     setupContact();
     setupMusic();
+
+    // NEW FEATURES
+    setupScrollProgress();
+    setupDarkMode();
+    setupConfetti();
+    setupParallax();
 
     // Build/preload gallery in the background, then hide loader when ready.
     let galleryResult = null;
