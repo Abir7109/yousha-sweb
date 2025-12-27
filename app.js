@@ -1100,7 +1100,6 @@
   function setupMusicEnhancements() {
     const audio = $("#bgMusic");
     const visualizer = $("#visualizer");
-    const volumeSlider = $("#volumeSlider");
     const playlistSelector = $("#playlistSelector");
     const musicTitle = $("#musicTitle");
     
@@ -1118,23 +1117,6 @@
       
       // Start inactive
       visualizer.classList.add("inactive");
-    }
-
-    // Volume Control
-    if (volumeSlider) {
-      volumeSlider.value = Math.round(audio.volume * 100);
-      
-      volumeSlider.addEventListener("input", (e) => {
-        audio.volume = e.target.value / 100;
-        localStorage.setItem("youshaweb:volume:v1", e.target.value);
-      });
-      
-      // Restore saved volume
-      const savedVolume = localStorage.getItem("youshaweb:volume:v1");
-      if (savedVolume) {
-        volumeSlider.value = savedVolume;
-        audio.volume = savedVolume / 100;
-      }
     }
 
     // Playlist Support
